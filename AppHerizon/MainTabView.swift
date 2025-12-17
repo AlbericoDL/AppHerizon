@@ -3,7 +3,7 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            HomeMapView()
+            CommunityView()
                 .tabItem {
                     Label("Community", systemImage: "person.3.fill")
                 }
@@ -11,6 +11,10 @@ struct MainTabView: View {
             SuggestionsView()
                 .tabItem {
                     Label("Suggestions", systemImage: "lightbulb.fill")
+                }
+            HomeMapView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
                 }
 
             ChallengeView()

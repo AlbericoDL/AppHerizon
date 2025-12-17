@@ -28,8 +28,8 @@ struct CommunityView: View {
     }
     
     @State private var posts: [Post] = [
-        Post(userName: "Alex", userAvatarSystemImage: "person.circle.fill", text: "What a beautiful day to explore the city!", imageName: "photo", liked: false, saved: false, commentsCount: 3, likesCount: 12),
-        Post(userName: "Sam", userAvatarSystemImage: "person.circle.fill", text: nil, imageName: "photo", liked: true, saved: false, commentsCount: 1, likesCount: 28),
+        Post(userName: "Alexa", userAvatarSystemImage: "person.circle.fill", text: "What a beautiful day to explore the city!", imageName: "photo", liked: false, saved: false, commentsCount: 3, likesCount: 12),
+        Post(userName: "Maria", userAvatarSystemImage: "person.circle.fill", text: nil, imageName: "photo", liked: true, saved: false, commentsCount: 1, likesCount: 28),
         Post(userName: "Taylor", userAvatarSystemImage: "person.circle.fill", text: "Just finished a great hike! Any recommendations for next trails?", imageName: nil, liked: false, saved: true, commentsCount: 5, likesCount: 7)
     ]
     
@@ -257,7 +257,7 @@ struct MessagesView: View {
 }
 
 // Simple placeholder ProfileView; replace with your real profile screen.
-struct ProfileView: View {
+struct ProfileView2: View {
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "person.crop.circle.fill")

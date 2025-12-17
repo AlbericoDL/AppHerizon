@@ -11,7 +11,7 @@ import SwiftUI
 struct AppHerizonApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
         }
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		360387352EF06B6100B0B934 /* AppHerizon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppHerizon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		367C62022EF2E7FC0055F28B /* SosView.swift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SosView.swift.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -41,6 +42,13 @@
 			isa = PBXGroup;
 			children = (
 				360387352EF06B6100B0B934 /* AppHerizon.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		367C62352EF2E8020055F28B /* Products */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +105,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 360387362EF06B6100B0B934 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 367C62352EF2E8020055F28B /* Products */;
+					ProjectRef = 367C62022EF2E7FC0055F28B /* SosView.swift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				360387342EF06B6100B0B934 /* AppHerizon */,

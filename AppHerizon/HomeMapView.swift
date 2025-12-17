@@ -12,6 +12,7 @@ struct HomeMapView: View {
         )
     )
     @State private var showProfile = false
+    @State private var showSos = false
 
     var body: some View {
         NavigationStack {
@@ -35,6 +36,8 @@ struct HomeMapView: View {
                     HStack {
                         Button {
                             print("SOS tapped!")
+                            showSos = true
+                            
                         } label: {
                             BigCircleButton(icon: "exclamationmark.triangle.fill", color: .red, size: 70)
                         }
@@ -55,6 +58,9 @@ struct HomeMapView: View {
             // Use modern navigation API instead of deprecated NavigationLink(isActive:)
             .navigationDestination(isPresented: $showProfile) {
                 ProfileView()
+            }
+            .navigationDestination(isPresented: $showSos) {
+                SOSView()
             }
         }
     }
