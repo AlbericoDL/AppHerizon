@@ -36,7 +36,7 @@ struct SOSView: View {
                         activeAction: $activeLight
                     )
                 }
-                .padding(50)
+                .padding(20)
                 .background(
                     RoundedRectangle(cornerRadius: 80)
                         .fill(Color.gray.opacity(0.2))
@@ -209,7 +209,7 @@ struct SwipeToCall: View {
 
                 Spacer()
             }
-            .padding(.horizontal, 6)
+            .padding(.horizontal, 0)
         }
         .frame(width: 320)
     }

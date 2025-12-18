@@ -2,11 +2,10 @@
 //  CommunityView.swift
 //  AppHerizon
 //
-//  Created by AFP FED 03 on 16/12/25.
-//
 
 import SwiftUI
 import PhotosUI
+import UIKit
 
 struct CommunityView: View {
     @State private var showMessages = false
@@ -14,13 +13,13 @@ struct CommunityView: View {
     @State private var showFilters = false
     @State private var showProfile = false
     
-    // Simple post model for demo
+    // MARK: - Post Model
     struct Post: Identifiable {
         let id = UUID()
         let userName: String
-        let userAvatarSystemImage: String
+        let userAvatarImageName: String   // immagine in Assets
         let text: String?
-        let imageName: String? // system image for placeholder, or asset name
+        let image: UIImage?               // ✅ ora supporta UIImage
         var liked: Bool
         var saved: Bool
         var commentsCount: Int
@@ -28,17 +27,16 @@ struct CommunityView: View {
     }
     
     @State private var posts: [Post] = [
-        Post(userName: "Alexa", userAvatarSystemImage: "person.circle.fill", text: "What a beautiful day to explore the city!", imageName: "photo", liked: false, saved: false, commentsCount: 3, likesCount: 12),
-        Post(userName: "Maria", userAvatarSystemImage: "person.circle.fill", text: nil, imageName: "photo", liked: true, saved: false, commentsCount: 1, likesCount: 28),
-        Post(userName: "Taylor", userAvatarSystemImage: "person.circle.fill", text: "Just finished a great hike! Any recommendations for next trails?", imageName: nil, liked: false, saved: true, commentsCount: 5, likesCount: 7)
+        Post(userName: "Alexa", userAvatarImageName: "fotograf", text: "What a beautiful day to explore the city!", image: UIImage(named: "londra"), liked: false, saved: false, commentsCount: 3, likesCount: 12),
+        Post(userName: "Maria", userAvatarImageName: "maria", text: nil, image: UIImage(named: "donna"), liked: true, saved: false, commentsCount: 1, likesCount: 28),
+        Post(userName: "Taylor", userAvatarImageName: "taylor", text: "Just finished a great hike! Any recommendations for next trails?", image: nil, liked: false, saved: true, commentsCount: 5, likesCount: 7)
     ]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-                // Controls row
+                // MARK: Controls row
                 HStack {
-                    // Left: Create Post + plus button
                     HStack(spacing: 8) {
                         Text("Create Post")
                             .font(.headline)
@@ -53,7 +51,6 @@ struct CommunityView: View {
                     
                     Spacer()
                     
-                    // Right: Filters + filter button
                     HStack(spacing: 8) {
                         Text("Filters")
                             .font(.headline)
@@ -69,7 +66,7 @@ struct CommunityView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
                 
-                // Posts list
+                // MARK: Posts list
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(posts.indices, id: \.self) { index in
@@ -82,7 +79,6 @@ struct CommunityView: View {
             }
             .navigationTitle("Community")
             .toolbar {
-                // Leading: Profile avatar (recommended entry point)
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         showProfile = true
@@ -97,7 +93,6 @@ struct CommunityView: View {
                     }
                 }
                 
-                // Trailing: Messages button
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showMessages = true
@@ -115,14 +110,11 @@ struct CommunityView: View {
             }
             .sheet(isPresented: $showCreatePost) {
                 CreatePostView { newText, pickedImage in
-                    // Convert the selected image to a placeholder since your Post uses system image names.
-                    // If you later store real images, extend Post to hold a UIImage or URL.
-                    let hasImage = pickedImage != nil
                     let newPost = Post(
                         userName: "You",
-                        userAvatarSystemImage: "person.circle.fill",
+                        userAvatarImageName: "profilooo",
                         text: newText.isEmpty ? nil : newText,
-                        imageName: hasImage ? "photo" : nil,
+                        image: pickedImage,   // ✅ ora passa UIImage
                         liked: false,
                         saved: false,
                         commentsCount: 0,
@@ -135,7 +127,6 @@ struct CommunityView: View {
                 }
             }
             .sheet(isPresented: $showFilters) {
-                // Simple placeholder for filters UI
                 NavigationStack {
                     VStack {
                         Text("Filters")
@@ -154,13 +145,11 @@ struct CommunityView: View {
     }
     
     // MARK: - Post Card
-    
     @ViewBuilder
     private func postCard(for post: Binding<Post>) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Header
             HStack(spacing: 12) {
-                Image(systemName: post.wrappedValue.userAvatarSystemImage)
+                Image(post.wrappedValue.userAvatarImageName)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 36, height: 36)
@@ -173,24 +162,20 @@ struct CommunityView: View {
                 Spacer()
             }
             
-            // Content: text
             if let text = post.wrappedValue.text {
                 Text(text)
                     .font(.body)
                     .foregroundColor(.primary)
             }
             
-            // Content: image (placeholder)
-            if let imageName = post.wrappedValue.imageName {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.15))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 180)
-                    Image(systemName: imageName)
-                        .font(.system(size: 48))
-                        .foregroundColor(.gray)
-                }
+            if let image = post.wrappedValue.image {   // ✅ mostra UIImage
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 180)
+                    .clipped()
+                    .cornerRadius(12)
             }
             
             // Actions
@@ -213,7 +198,7 @@ struct CommunityView: View {
                 .buttonStyle(.plain)
                 
                 Button {
-                    // Handle comments action
+                    // handle comments
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "text.bubble")
@@ -246,41 +231,10 @@ struct CommunityView: View {
     }
 }
 
-// Placeholder MessagesView to ensure navigation compiles.
-// Replace with your real MessagesView implementation.
-struct MessagesView: View {
-    var body: some View {
-        Text("Messages")
-            .font(.largeTitle)
-            .navigationTitle("Messages")
-    }
-}
-
-// Simple placeholder ProfileView; replace with your real profile screen.
-struct ProfileView2: View {
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .frame(width: 96, height: 96)
-                .foregroundColor(.blue)
-            Text("Your Profile")
-                .font(.title2)
-                .bold()
-            Spacer()
-        }
-        .padding()
-        .navigationTitle("Profile")
-    }
-}
-
 // MARK: - Create Post View
-
 struct CreatePostView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var text: String = ""
-    
-    // Optional image picker (PhotosPicker requires iOS 16+)
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
     
@@ -302,10 +256,7 @@ struct CreatePostView: View {
                 TextEditor(text: $text)
                     .frame(minHeight: 120)
                     .padding(8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.secondarySystemBackground))
-                    )
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(.secondarySystemBackground)))
                     .overlay(
                         Group {
                             if text.isEmpty {
@@ -382,6 +333,31 @@ struct CreatePostView: View {
 private extension String {
     func trimmed() -> String {
         trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+// MARK: - Placeholder Views
+struct MessagesView: View {
+    var body: some View {
+        Text("Messages").font(.largeTitle)
+            .navigationTitle("Messages")
+    }
+}
+
+struct ProfileView2: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .frame(width: 96, height: 96)
+                .foregroundColor(.blue)
+            Text("Your Profile")
+                .font(.title2)
+                .bold()
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Profile")
     }
 }
 

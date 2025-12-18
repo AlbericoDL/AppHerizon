@@ -3,20 +3,22 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            CommunityView()
-                .tabItem {
-                    Label("Community", systemImage: "person.3.fill")
-                }
-
-            SuggestionsView()
-                .tabItem {
-                    Label("Suggestions", systemImage: "lightbulb.fill")
-                }
+            
             HomeMapView()
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
 
+            CommunityView()
+                .tabItem {
+                    Label("Community", systemImage: "person.3.fill")
+                }
+
+            /*SuggestionsView()
+                .tabItem {
+                    Label("Suggestions", systemImage: "lightbulb.fill")
+                }
+            
             ChallengeView()
                 .tabItem {
                     Label("Challenge", systemImage: "flag.fill")
@@ -25,7 +27,7 @@ struct MainTabView: View {
             MyTripView()
                 .tabItem {
                     Label("My Trip", systemImage: "map.fill")
-                }
+                }*/
         }
     }
 }
